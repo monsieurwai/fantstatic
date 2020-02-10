@@ -18,12 +18,15 @@
   },
   "scripts": {
     "generate:tailwind": "postcss dev/style/tailwind.css -o dist/style/tailwind.css compressed --source-maps",
+    "minify-imgs": "node compress-images.js",
+
     "watch-html": "html-includes --watch --minify --src dev --dest dist/html",
     "watch-scss": "node-sass --watch dev/style/main.scss -o dist/style --output-style compressed",
+    "watch-js": "npm-run-all --parallel watch-main-js watch-specific-js",
+    
     "watch-main-js": "babel --watch dev/js/main --out-file dist/js/main/main.js --source-maps",
     "watch-specific-js": "babel --watch dev/js/specific --out-dir dist/js/specific --source-maps",
-    "watch-js": "npm-run-all --parallel watch-main-js watch-specific-js",
-    "minify-imgs": "node compress-images.js",
+    
     "dev": "npm-run-all --parallel generate:tailwind watch-scss watch-js watch-html",
     "build": "postcss dev/style/tailwind.css -o dist/style/tailwind.css && html-includes --minify --src dev --dest dist/html && node-sass dev/style/main.scss -o dist/style --output-style compressed && babel dev/js/main --out-file dist/js/main/main.js --source-maps && babel dev/js/specific --out-dir dist/js/specific --source-maps && node compress-images.js"
   },
